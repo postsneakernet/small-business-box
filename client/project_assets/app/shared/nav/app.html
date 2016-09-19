@@ -1,0 +1,26 @@
+<!-- Static navbar -->
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" ui-sref="app.dashboard">Small Business Box</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li ng-class="{active: $state.includes('app.dashboard')}"><a ui-sref="app.dashboard">Dashboard</a></li>
+        <li ng-class="{active: $state.includes('app.messages')}"><a ui-sref="app.messages.inbox" ui-sref-active="active">Messages</a></li>
+        <li ng-class="{active: $state.includes('app.profile')}"><a ui-sref="app.profile" ui-sref-active="active">Profile</a></li>
+        <li ng-class="{active: $state.includes('app.employees')}"><a ui-sref="app.employees" ui-sref-active="active">Employee Directory</a></li>
+        <li ng-class="{active: $state.includes('app.apps')}"><a ui-sref="app.apps" ui-sref-active="active">Apps</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-class="{active: $state.includes('login.login')}"><a ui-sref="login.login" ui-sref-active="active">Login</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
