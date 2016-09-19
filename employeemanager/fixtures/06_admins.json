@@ -1,0 +1,16 @@
+[
+    {
+        "model": "employeemanager.models.Admin",
+        "records": [
+            {
+                "credential_id": 2
+            },
+            {
+                "credential_id": 3
+            },
+            {
+                "credential_id": 4
+            }
+        ]
+    }
+]

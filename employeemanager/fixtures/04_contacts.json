@@ -1,0 +1,61 @@
+[
+    {
+        "model": "employeemanager.models.Contact",
+        "records": [
+            {
+                "address": "11 Main Street",
+                "city": "Fort Lauderdale",
+                "state": "FL",
+                "zip_code": "12345",
+                "phone": "123-555-1003",
+                "email": "c@c.com",
+                "employee_id": 3
+            },
+            {
+                "address": "22 Palm Street",
+                "city": "Boca Raton",
+                "state": "FL",
+                "zip_code": "12346",
+                "phone": "123-555-1004",
+                "email": "d@d.com",
+                "employee_id": 4
+            },
+            {
+                "address": "12 Long Street",
+                "city": "Fort Myers",
+                "state": "FL",
+                "zip_code": "12347",
+                "phone": "123-555-1005",
+                "email": "e@e.com",
+                "employee_id": 5
+            },
+            {
+                "address": "34 Long Street",
+                "city": "Fort Myers",
+                "state": "FL",
+                "zip_code": "12347",
+                "phone": "123-555-1006",
+                "email": "f@f.com",
+                "employee_id": 6
+            },
+            {
+                "address": "55 Beach Street",
+                "city": "Miami",
+                "state": "FL",
+                "zip_code": "12348",
+                "phone": "123-555-1007",
+                "email": "g@g.com",
+                "employee_id": 7
+            },
+            {
+                "address": "66 Rainy Street",
+                "city": "Miami",
+                "state": "FL",
+                "zip_code": "12348",
+                "phone": "123-555-1008",
+                "email": "h@h.com",
+                "employee_id": 8
+            }
+        ]
+    }
+]

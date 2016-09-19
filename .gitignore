@@ -1,3 +1,8 @@
+# Frontend files
+client/bower_components/*
+client/node_modules/*
+client/sbb/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

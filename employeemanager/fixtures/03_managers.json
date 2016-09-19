@@ -1,0 +1,19 @@
+[
+    {
+        "model": "employeemanager.models.Manager",
+        "records": [
+            {
+                "department_id": 1,
+                "employee_id": 2
+            },
+            {
+                "department_id": 2,
+                "employee_id": 3
+            },
+            {
+                "department_id": 3,
+                "employee_id": 5
+            }
+        ]
+    }
+]

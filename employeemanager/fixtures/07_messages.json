@@ -1,0 +1,47 @@
+[
+    {
+        "model": "employeemanager.models.Message",
+        "records": [
+            {
+                "content": "This is a message.",
+                "to_employee_id": 1,
+                "from_employee_id": 2
+            },
+            {
+                "subject": "Your account has been updated",
+                "content": "This is a message.",
+                "to_employee_id": 1
+            },
+            {
+                "subject": "Project Proposal Meeting Today",
+                "content": "This is a message.",
+                "to_employee_id": 1,
+                "from_employee_id": 2
+            },
+            {
+                "subject": "Leaving early",
+                "content": "This is a message.",
+                "to_employee_id": 2,
+                "from_employee_id": 1
+            },
+            {
+                "subject": "Project Outline Updated",
+                "content": "This is a message.",
+                "to_employee_id": 2,
+                "from_employee_id": 3
+            },
+            {
+                "subject": "Site ready to launch",
+                "content": "This is a message.",
+                "to_employee_id": 5,
+                "from_employee_id": 4
+            },
+            {
+                "subject": "Lunch Today?",
+                "content": "This is a message.",
+                "to_employee_id": 4,
+                "from_employee_id": 1
+            }
+        ]
+    }
+]

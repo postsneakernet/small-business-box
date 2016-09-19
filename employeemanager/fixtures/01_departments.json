@@ -1,0 +1,31 @@
+[
+    {
+        "model": "employeemanager.models.Department",
+        "records": [
+            {
+                "name": "Engineering"
+            },
+            {
+                "name": "Testing"
+            },
+            {
+                "name": "Human Resources"
+            },
+            {
+                "name": "IT"
+            },
+            {
+                "name": "Customer Support"
+            },
+            {
+                "name": "Research and Development"
+            },
+            {
+                "name": "Sales"
+            },
+            {
+                "name": "Production"
+            }
+        ]
+    }
+]
