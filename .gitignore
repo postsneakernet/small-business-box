@@ -2,6 +2,7 @@
 client/bower_components/*
 client/node_modules/*
 client/sbb/*
+**/.sass-cache/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
