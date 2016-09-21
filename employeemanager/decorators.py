@@ -1,5 +1,17 @@
 import functools
-from flask import jsonify, request, url_for
+from flask import jsonify, request, url_for, make_response
+
+
+def cors(f):
+    """Adds CORS headers to the response."""
+    @functools.wraps(f)
+    def wrapped(*args, **kwargs):
+        rv = f(*args, **kwargs)
+        rv = make_response(rv)
+        rv.headers['Access-Control-Allow-Origin'] = '*'
+        rv.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        return rv
+    return wrapped
 
 
 def json(custom_data=None):
@@ -34,12 +46,15 @@ def json(custom_data=None):
 def _filter_query(model, query, filter_spec):
     filters = [f.split(',') for f in filter_spec.split(';')]
     for f in filters:
-        if len(f) < 3 or (len(f) > 3 and f[1] != 'in'):
+        if len(f) == 2 and (f[1] == 'null' or f[1] == 'not_null'):
+            f.append(None)
+        elif len(f) < 3 or (len(f) > 3 and f[1] != 'in'):
             continue
         if f[1] == 'in':
             f = [f[0], f[1], f[2:]]
         ops = {'eq': '__eq__', 'ne': '__ne__', 'lt': '__lt__', 'le': '__le__',
-               'gt': '__gt__', 'ge': '__ge__', 'in': 'in_', 'like': 'like'}
+               'gt': '__gt__', 'ge': '__ge__', 'in': 'in_', 'like': 'like',
+               'null': '__eq__', 'not_null': '__ne__'}
         if hasattr(model, f[0]) and f[1] in ops.keys():
             column = getattr(model, f[0])
             op = ops[f[1]]
@@ -85,8 +100,8 @@ def collection(model, name=None, max_per_page=10, custom_data=None, custom_url='
             p = query.paginate(page, per_page)
             pages = {'page': page, 'per_page': per_page, 'total': p.total, 'pages': p.pages}
             if p.has_prev:
-                pages['prev_url'] = url_for(request.endpoint, page=p.prev_num,
-                                            per_page=per_page, expand=expand,
+                pages['prev_url'] = url_for(request.endpoint, filter=filter, sort=sort,
+                                            page=p.prev_num, per_page=per_page, expand=expand,
                                             _external=True, **kwargs)
             else:
                 pages['prev_url'] = None

@@ -2,10 +2,11 @@ from flask import request
 
 from . import api
 from ..models import db, Employee
-from ..decorators import json, collection
+from ..decorators import json, collection, cors
 
 
 @api.route('/employees-public/', methods=['GET'])
+@cors
 @json()
 @collection(Employee, custom_data='export_public_data', custom_url='get_public_url')
 def get_employees_public():
@@ -13,12 +14,14 @@ def get_employees_public():
 
 
 @api.route('/employees-public/<int:id>', methods=['GET'])
+@cors
 @json(custom_data='export_public_data')
 def get_employee_public(id):
     return Employee.query.get_or_404(id)
 
 
 @api.route('/employees/', methods=['GET'])
+@cors
 @json()
 @collection(Employee)
 def get_employees():
@@ -26,6 +29,7 @@ def get_employees():
 
 
 @api.route('/employees/<int:id>', methods=['GET'])
+@cors
 @json()
 def get_employee(id):
     return Employee.query.get_or_404(id)

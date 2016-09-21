@@ -3,10 +3,11 @@ from sqlalchemy import or_
 
 from . import api
 from ..models import db, Message
-from ..decorators import json, collection
+from ..decorators import json, collection, cors
 
 
 @api.route('/employees/<int:id>/messages/', methods=['GET'])
+@cors
 @json()
 @collection(Message)
 def get_employee_messages(id):
@@ -14,6 +15,7 @@ def get_employee_messages(id):
 
 
 @api.route('/messages/', methods=['GET'])
+@cors
 @json()
 @collection(Message)
 def get_messages():
@@ -21,6 +23,7 @@ def get_messages():
 
 
 @api.route('/messages/<int:id>', methods=['GET'])
+@cors
 @json()
 def get_message(id):
     return Message.query.get_or_404(id)
