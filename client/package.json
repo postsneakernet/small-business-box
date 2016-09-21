@@ -2,6 +2,7 @@
   "name": "sbb",
   "version": "0.1.0",
   "devDependencies": {
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-jshint": "^2.0.1",
     "gulp-ruby-sass": "^2.0.6",

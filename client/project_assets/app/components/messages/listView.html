@@ -1,0 +1,38 @@
+<div class="row">
+  <h1>{{title}}</h1>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <message-nav></message-nav>
+  </div>
+  <div class="col-md-8">
+    <div>{{title}} content</div>
+    <div>
+      <span>
+        <button class="btn" ng-disabled="!meta.prev_url" ng-click="getPrev()">Prev</button>
+        <button class="btn" ng-disabled="!meta.next_url" ng-click="getNext()">Next</button>
+        <span>{{minMessage}} - {{maxMessage}} of {{meta.total}} messages</span>
+      </span>
+    </div>
+    <div>state: {{state.current.name}}</div>
+    <div>filter: {{filter}}</div>
+    <div>page: {{page}}</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th ng-hide="filter == 'outbox' || filter == 'search'">New</th>
+          <th ng-show="filter == 'outbox' || filter == 'search'">To</th>
+          <th ng-hide="filter == 'outbox'">From</th>
+          <th>Subject</th>
+          <th>Date</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr message ng-repeat="message in messages">
+        </tr>
+      </tbody>
+      <div ng-hide="messages.length">No messages found.</div>
+    </table>
+  </div>
+</div>

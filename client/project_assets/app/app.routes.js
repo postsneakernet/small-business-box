@@ -45,40 +45,28 @@
                 url: '/messages',
                 template: '<ui-view/>'
             })
-            .state('app.messages.inbox', {
-                url: '',
-                templateUrl: 'app/components/messages/list.html',
-                controller: 'InboxCtrl'
-            })
-            .state('app.messages.unread', {
-                url: '/unread',
-                templateUrl: 'app/components/messages/list.html',
-                controller: 'UnreadCtrl'
-            })
-            .state('app.messages.system', {
-                url: '/system',
-                templateUrl: 'app/components/messages/list.html',
-                controller: 'SystemCtrl'
-            })
-            .state('app.messages.outbox', {
-                url: '/outbox',
-                templateUrl: 'app/components/messages/list.html',
-                controller: 'OutboxCtrl'
-            })
-            .state('app.messages.search', {
-                url: '/search',
-                templateUrl: 'app/components/messages/list.html',
-                controller: 'SearchCtrl'
+            .state('app.messages.list', {
+                url: '/:filter/',
+                templateUrl: 'app/components/messages/listView.html',
+                controller: 'MessageListController'
             })
             .state('app.messages.compose', {
                 url: '/compose',
-                templateUrl: 'app/components/messages/compose.html',
-                controller: 'ComposeCtrl'
+                templateUrl: 'app/components/messages/composeView.html',
+                controller: 'ComposeController'
             })
             .state('app.messages.detail', {
                 url: '/detail',
-                templateUrl: 'app/components/messages/detail.html',
-                controller: 'DetailCtrl'
+                templateUrl: 'app/components/messages/detailView.html',
+                params: { messageUrl: null, filter: null },
+                controller: 'MessageDetailController',
+                onEnter: ['$state', '$stateParams', '$timeout', function ($state, $stateParams, $timeout) {
+                    if ($stateParams.messageUrl === null) {
+                        $timeout(function () {
+                            $state.go('app.messages.list', {filter: 'inbox'});
+                        });
+                    }
+                }]
             });
 
         $stateProvider

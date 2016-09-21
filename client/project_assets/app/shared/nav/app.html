@@ -13,7 +13,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li ng-class="{active: $state.includes('app.dashboard')}"><a ui-sref="app.dashboard">Dashboard</a></li>
-        <li ng-class="{active: $state.includes('app.messages')}"><a ui-sref="app.messages.inbox" ui-sref-active="active">Messages</a></li>
+        <li ng-class="{active: $state.includes('app.messages')}"><a ui-sref="app.messages.list({filter: 'inbox'})" ui-sref-active="active">Messages</a></li>
         <li ng-class="{active: $state.includes('app.profile')}"><a ui-sref="app.profile" ui-sref-active="active">Profile</a></li>
         <li ng-class="{active: $state.includes('app.employees')}"><a ui-sref="app.employees" ui-sref-active="active">Employee Directory</a></li>
         <li ng-class="{active: $state.includes('app.apps')}"><a ui-sref="app.apps" ui-sref-active="active">Apps</a></li>

@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var gutil = require('gulp-util');
 var sass = require('gulp-ruby-sass');
+var del = require('del');
 
 var pkg = require('./package.json');
 
@@ -57,7 +58,8 @@ var watchPaths = {
         srcPaths.img,
         srcPaths.js,
         srcPaths.app,
-        app + '**/*.html'
+        app + '**/*.html',
+        app + '**/*.js'
     ]
 };
 
@@ -71,6 +73,9 @@ var dstPaths = {
     root: project
 };
 
+gulp.task('clean', function () {
+    return del([dstPaths.root + '**']);
+});
 
 gulp.task('copyCss', function () {
     gulp.src(vendorPaths.css)
