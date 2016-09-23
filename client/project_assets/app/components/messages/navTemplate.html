@@ -1,19 +1,24 @@
 <ul class="nav nav-pills nav-stacked">
-  <li ng-class="{'active': filter == 'search'}">
-    <a ui-sref="app.messages.list({filter: 'search'})">Search</a>
-  </li>
   <li ng-class="{'active': title == 'Compose'}">
     <a ui-sref="app.messages.compose">Compose</a>
   </li>
   <li ng-class="{'active': filter == 'inbox'}">
     <a ui-sref="app.messages.list({filter: 'inbox'})">Inbox</a>
   </li>
+
+  <div>
+  <ul class="nav nav-pills nav-stacked">
+
   <li ng-class="{'active': filter == 'unread'}">
     <a ui-sref="app.messages.list({filter: 'unread'})">Unread</a>
   </li>
   <li ng-class="{'active': filter == 'system'}">
     <a ui-sref="app.messages.list({filter: 'system'})">System Messages</a>
   </li>
+
+  </ul>
+</div>
+
   <li ng-class="{'active': filter == 'outbox'}">
     <a ui-sref="app.messages.list({filter: 'outbox'})">Outbox</a>
   </li>

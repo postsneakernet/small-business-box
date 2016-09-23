@@ -4,13 +4,14 @@
     app.service('MessageService', function ($http, $q, $rootScope) {
         var expand = '?expand=1';
         var sort = '&sort=date,desc';
-        var perPage = '&per_page=10';
+        var perPage = '&per_page=1';
         var _filter = '&filter=';
         var inbox = _filter + 'to_employee_id,eq,' + $rootScope.currentUser.id;
         var outbox = _filter + 'from_employee_id,eq,' + $rootScope.currentUser.id;
         var baseUrl = $rootScope.currentUser.message_url + expand + sort + perPage;
+        var validOptions = ['content', 'subject'];
 
-        this.getMessages = function (filter, page, url) {
+        this.getMessages = function (filter, search, url) {
             var _url = baseUrl;
             if (url) {
                 _url = url;
@@ -23,7 +24,8 @@
             } else if (filter === 'system') {
                 filter = inbox + ';from_employee_id,null';
             } else if (filter === 'search') {
-                filter = '';
+                filter = (search.query && search.option && validOptions.indexOf(search.option) >= 0) ?
+                    _filter + search.option + ',like,%' + search.query + '%' : _filter + 'content,null';
             } else {
                 filter = inbox;
             }

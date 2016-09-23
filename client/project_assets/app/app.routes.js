@@ -43,10 +43,11 @@
             .state('app.messages', {
                 abstract: true,
                 url: '/messages',
-                template: '<ui-view/>'
+                template: '<ui-view/>',
+                controller: 'MessageController'
             })
             .state('app.messages.list', {
-                url: '/:filter/',
+                url: '/:filter/?option?query',
                 templateUrl: 'app/components/messages/listView.html',
                 controller: 'MessageListController'
             })

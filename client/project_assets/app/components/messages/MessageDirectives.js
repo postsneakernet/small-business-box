@@ -14,4 +14,11 @@
             templateUrl: 'app/components/messages/navTemplate.html'
         };
     });
+
+    app.directive('messageSearch', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/messages/messageSearchTemplate.html'
+        };
+    });
 })();

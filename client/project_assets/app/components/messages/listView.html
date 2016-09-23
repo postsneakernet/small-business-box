@@ -1,12 +1,16 @@
 <div class="row">
-  <h1>{{title}}</h1>
+  <div class="col-md-4">
+    <message-search></message-search>
+  </div>
+  <div class="col-md-4">
+    <h1>{{title | titlecase}}</h1>
+  </div>
 </div>
 <div class="row">
   <div class="col-md-2">
     <message-nav></message-nav>
   </div>
   <div class="col-md-8">
-    <div>{{title}} content</div>
     <div>
       <span>
         <button class="btn" ng-disabled="!meta.prev_url" ng-click="getPrev()">Prev</button>
@@ -14,9 +18,6 @@
         <span>{{minMessage}} - {{maxMessage}} of {{meta.total}} messages</span>
       </span>
     </div>
-    <div>state: {{state.current.name}}</div>
-    <div>filter: {{filter}}</div>
-    <div>page: {{page}}</div>
     <table class="table">
       <thead>
         <tr>

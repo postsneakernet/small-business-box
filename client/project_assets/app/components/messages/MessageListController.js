@@ -1,16 +1,27 @@
 (function () {
     var app = angular.module('sbb');
 
-    app.controller('MessageListController', function ($scope, $state, $stateParams, MessageService, EmployeeService) {
+    app.controller('MessageListController', function ($scope, $location, $state, $stateParams, MessageService, EmployeeService) {
         $scope.title = $stateParams.filter || 'Inbox';
         $scope.filter = $stateParams.filter;
-        $scope.page = $stateParams.page;
         $scope.state = $state;
+        $scope.search.option = $state.params.option || 'content';
+        $scope.search.query = $state.params.query;
+
+        validFilters = ['inbox', 'unread', 'system', 'outbox', 'search'];
+
+        if (validFilters.indexOf($scope.filter) < 0) {
+            $state.go('app.messages.list', {filter: 'inbox'});
+        }
 
         getMessages();
 
         function getMessages(url) {
-            MessageService.getMessages($scope.filter, $scope.page, url).then(function (data) {
+            if ($scope.filter !== 'search') {
+                $location.url($location.path());
+            }
+
+            MessageService.getMessages($scope.filter, $scope.search, url).then(function (data) {
                 $scope.messages = data.messages;
                 $scope.meta = data.meta;
 
