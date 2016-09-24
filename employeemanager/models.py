@@ -26,7 +26,9 @@ class Department(db.Model):
         url = None
         if self.manager:
             url = url_for('api.get_manager', id=self.manager.id, _external=True)
-        return {'self_url': self.get_url(), 'name': self.name,
+        return {'id': self.id,
+                'self_url': self.get_url(),
+                'name': self.name,
                 'manager_url': url}
 
     def import_data(self, data):
@@ -81,7 +83,8 @@ class Employee(db.Model):
     def export_data(self):
         urls = self.build_external_urls()
 
-        return {'self_url': self.get_url(),
+        return {'id': self.id,
+                'self_url': self.get_url(),
                 'first_name': self.first_name,
                 'last_name': self.last_name,
                 'ssn': self.ssn,
@@ -96,7 +99,8 @@ class Employee(db.Model):
     def export_public_data(self):
         urls = self.build_external_urls()
 
-        return {'self_url': self.get_public_url(),
+        return {'id': self.id,
+                'self_url': self.get_public_url(),
                 'first_name': self.first_name,
                 'last_name': self.last_name,
                 'contact_url': urls['contact_url'],
@@ -137,7 +141,8 @@ class Manager(db.Model):
         return url_for('api.get_manager', id=self.id, _external=True)
 
     def export_data(self):
-        return {'self_url': self.get_url(),
+        return {'id': self.id,
+                'self_url': self.get_url(),
                 'employee_url': url_for('api.get_employee', id=self.employee_id, _external=True),
                 'employee_public_url': url_for('api.get_employee_public',
                                                id=self.employee_id, _external=True),
@@ -172,7 +177,8 @@ class Contact(db.Model):
         return url_for('api.get_contact', id=self.id, _external=True)
 
     def export_data(self):
-        return {'self_url': self.get_url(),
+        return {'id': self.id,
+                'self_url': self.get_url(),
                 'address': self.address,
                 'city': self.city,
                 'state': self.state,
@@ -239,7 +245,8 @@ class Credential(db.Model):
         return url_for('api.get_credential', id=self.id, _external=True)
 
     def export_data(self):
-        return {'self_url': self.get_url(),
+        return {'id': self.id,
+                'self_url': self.get_url(),
                 'username': self.username,
                 'employee_url': url_for('api.get_employee', id=self.employee_id, _external=True)}
 
@@ -271,7 +278,8 @@ class Admin(db.Model):
         return url_for('api.get_admin', id=self.id, _external=True)
 
     def export_data(self):
-        return {'self_url': self.get_url(),
+        return {'id': self.id,
+                'self_url': self.get_url(),
                 'credential_url': url_for('api.get_credential',
                                           id=self.credential_id, _external=True)}
 
@@ -293,6 +301,7 @@ class Message(db.Model):
                                nullable=False)
     from_employee_id = db.Column('from_employee_id', db.Integer, db.ForeignKey('employees.id'))
     is_unread = db.Column(db.Boolean, nullable=False, default=True)
+    date = db.Column(db.DateTime, default=datetime.datetime.now())
 
     def get_url(self):
         return url_for('api.get_message', id=self.id, _external=True)
@@ -306,7 +315,8 @@ class Message(db.Model):
             from_employee_public_url = url_for('api.get_employee_public',
                                                id=self.from_employee_id, _external=True)
 
-        return {'self_url': self.get_url(),
+        return {'id': self.id,
+                'self_url': self.get_url(),
                 'subject': self.subject,
                 'content': self.content,
                 'to_employee_public_url': url_for('api.get_employee_public',
@@ -315,7 +325,8 @@ class Message(db.Model):
                                            id=self.to_employee_id, _external=True),
                 'from_employee_public_url': from_employee_public_url,
                 'from_employee_url': from_employee_url,
-                'is_unread': self.is_unread}
+                'is_unread': self.is_unread,
+                'date': self.date}
 
     def import_data(self, data):
         try:
