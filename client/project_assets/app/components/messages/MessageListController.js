@@ -1,12 +1,13 @@
 (function () {
     var app = angular.module('sbb');
 
-    app.controller('MessageListController', function ($scope, $location, $state, $stateParams, MessageService, EmployeeService) {
+    app.controller('MessageListController',
+                   function ($scope, $location, $state, $stateParams, MessageService, EmployeeService) {
         $scope.title = $stateParams.filter || 'Inbox';
         $scope.filter = $stateParams.filter;
         $scope.state = $state;
-        $scope.search.option = $state.params.option || 'content';
-        $scope.search.query = $state.params.query;
+        $scope.search.option = $state.params.option || $scope.search.option || 'content';
+        $scope.search.query = $state.params.query || $scope.search.query || '';
 
         validFilters = ['inbox', 'unread', 'system', 'outbox', 'search'];
 
@@ -28,7 +29,7 @@
                 updateMessageCount($scope.meta);
 
                 for (var i = 0; i < $scope.messages.length; ++i) {
-                    addEmployeeInfo($scope.messages[i]);
+                    $scope.addEmployeeInfo($scope.messages[i]);
                 }
 
                 $scope.getNext = function () {
@@ -58,19 +59,6 @@
             } else {
                 $scope.maxMessage = (totalMessage > 0) ? perPage * currentPage : 0;
             }
-        }
-
-
-        function addEmployeeInfo(message) {
-            if (message.from_employee_public_url) {
-                EmployeeService.getEmployee(message.from_employee_public_url).then(function (data) {
-                    message.fromEmployee = data;
-                });
-            }
-
-            EmployeeService.getEmployee(message.to_employee_public_url).then(function (data) {
-                message.toEmployee = data;
-            });
         }
     });
 })();

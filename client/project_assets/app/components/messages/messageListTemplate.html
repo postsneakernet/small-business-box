@@ -1,0 +1,18 @@
+<td ng-hide="filter == 'outbox' || filter == 'search'">
+  {{message.is_unread}}
+</td>
+<td ng-show="filter == 'outbox' || filter == 'search'">
+  {{message.toEmployee.first_name}} {{message.toEmployee.last_name || '(system)'}}
+</td>
+<td ng-hide="filter == 'outbox'">
+  {{message.fromEmployee.first_name}} {{message.fromEmployee.last_name || '(system)'}}
+</td>
+<td>
+  {{message.subject || '(no subject)'}}
+</td>
+<td>
+  {{message.date}}
+</td>
+<td>
+  <a ui-sref="app.messages.detail({messageUrl: '{{message.self_url}}', filter: '{{filter}}'})">read</a>
+</td>

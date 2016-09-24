@@ -30,8 +30,7 @@
                 filter = inbox;
             }
 
-            return $http.get(_url + filter)
-            .then(function (response) {
+            return $http.get(_url + filter).then(function (response) {
                 return response.data;
             });
         };

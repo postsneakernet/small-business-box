@@ -1,16 +1,19 @@
 <div class="search-box">
   <form class="form-inline">
+
     <div class="form-group">
       <select ng-model="search.option" class="search-dropdown form-control">
         <option value="content">Content</option>
         <option value="subject">Subject</option>
       </select>
     </div>
+
     <div class="input-group">
       <input ng-model="search.query" type="text" class="search-right form-control" placeholder="Search for...">
       <span class="input-group-btn">
         <a ng-click="setParentSearch()" class="btn btn-default" type="button">Go!</a>
       </span>
     </div>
+
   </form>
 </div>

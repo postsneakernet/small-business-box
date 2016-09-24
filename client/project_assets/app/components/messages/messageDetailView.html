@@ -1,0 +1,36 @@
+<div class="row">
+
+  <div class="col-md-4">
+    <message-search></message-search>
+  </div>
+
+  <div class="col-md-4">
+    <h1>{{title}}</h1>
+  </div>
+
+</div>
+
+<div class="row">
+
+  <div class="col-md-2">
+    <message-nav></message-nav>
+  </div>
+
+  <div class="col-md-8">
+    <span ng-show="isReadOnly">
+      <a ui-sref="app.messages.list({filter: '{{filter}}'})"><button class="btn">Back</button></a>
+      <a ng-show="message.from_employee_public_url && filter != 'outbox'" ng-click="reply()">
+        <button class="btn">Reply</button>
+      </a>
+    </span>
+
+    <span ng-hide="isReadOnly">
+      <a ui-sref="app.messages.list({filter: 'inbox'})"><button class="btn">Cancel</button></a>
+      <a ui-sref="app.messages.compose"><button class="btn">Send</button></a>
+    </span>
+
+    <message-detail></message-detail>
+
+  </div>
+
+</div>

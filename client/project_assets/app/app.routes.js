@@ -34,6 +34,18 @@
                     }
                 }
             })
+            .state('app.profile', {
+                url: '/profile',
+                template: '<h1>Profile</h1>'
+            })
+            .state('app.employees', {
+                url: '/employees',
+                template: '<h1>Employee Directory</h1>'
+            })
+            .state('app.apps', {
+                url: '/apps',
+                templateUrl: 'app/components/apps/apps.html'
+            })
             .state('app.dashboard', {
                 url: '/dashboard',
                 template: '<h1>Dashboard</h1>'
@@ -48,17 +60,12 @@
             })
             .state('app.messages.list', {
                 url: '/:filter/?option?query',
-                templateUrl: 'app/components/messages/listView.html',
+                templateUrl: 'app/components/messages/messageListView.html',
                 controller: 'MessageListController'
-            })
-            .state('app.messages.compose', {
-                url: '/compose',
-                templateUrl: 'app/components/messages/composeView.html',
-                controller: 'ComposeController'
             })
             .state('app.messages.detail', {
                 url: '/detail',
-                templateUrl: 'app/components/messages/detailView.html',
+                templateUrl: 'app/components/messages/messageDetailView.html',
                 params: { messageUrl: null, filter: null },
                 controller: 'MessageDetailController',
                 onEnter: ['$state', '$stateParams', '$timeout', function ($state, $stateParams, $timeout) {
@@ -68,20 +75,12 @@
                         });
                     }
                 }]
-            });
-
-        $stateProvider
-            .state('app.profile', {
-                url: '/profile',
-                template: '<h1>Profile</h1>'
             })
-            .state('app.employees', {
-                url: '/employees',
-                template: '<h1>Employee Directory</h1>'
-            })
-            .state('app.apps', {
-                url: '/apps',
-                templateUrl: 'app/components/apps/apps.html'
+            .state('app.messages.compose', {
+                url: '/compose',
+                templateUrl: 'app/components/messages/messageDetailView.html',
+                params: { messageUrl: null },
+                controller: 'MessageDetailController'
             });
     });
 })();

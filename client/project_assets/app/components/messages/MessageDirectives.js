@@ -1,17 +1,10 @@
 (function () {
     var app = angular.module('sbb');
 
-    app.directive('message', function () {
-        return {
-            restrict: 'A',
-            templateUrl: 'app/components/messages/messageTemplate.html'
-        };
-    });
-
     app.directive('messageNav', function () {
         return {
             restrict: 'E',
-            templateUrl: 'app/components/messages/navTemplate.html'
+            templateUrl: 'app/components/messages/messageNavTemplate.html'
         };
     });
 
@@ -19,6 +12,20 @@
         return {
             restrict: 'E',
             templateUrl: 'app/components/messages/messageSearchTemplate.html'
+        };
+    });
+
+    app.directive('messageList', function () {
+        return {
+            restrict: 'A',
+            templateUrl: 'app/components/messages/messageListTemplate.html'
+        };
+    });
+
+    app.directive('messageDetail', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/messages/messageDetailTemplate.html'
         };
     });
 })();

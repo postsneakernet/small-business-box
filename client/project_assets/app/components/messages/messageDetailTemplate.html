@@ -1,0 +1,41 @@
+<div class="message-form">
+  <form id="messageForm" name="messageForm" class="form-horizontal">
+
+    <div class="form-group">
+      <label class="control-lable col-xs-2" for="toEmployee">To:</label>
+      <div class="col-xs-6">
+        <input ng-show="isReply" value="{{message.fromEmployee.first_name}} {{message.fromEmployee.last_name}}"
+               ng-readonly="isReply" id="toEmployee" name="toEmployee" class="form-control" type="text">
+        <input ng-hide="isReply" value="{{message.toEmployee.first_name}} {{message.toEmployee.last_name}}"
+               ng-readonly="isReadOnly" id="toEmployee" name="toEmployee" class="form-control" type="text">
+      </div>
+    </div>
+
+    <div class="form-group" ng-show="isReadOnly">
+      <label class="control-lable col-xs-2" for="toEmployee">From:</label>
+      <div class="col-xs-6">
+        <input value="{{message.fromEmployee.first_name}} {{message.fromEmployee.last_name || '(system)'}}"
+               ng-readonly="isReadOnly" id="toEmployee" name="toEmployee" class="form-control" type="text">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-lable col-xs-2" for="toEmployee">Subject:</label>
+      <div class="col-xs-6">
+        <input ng-hide="isReadOnly" ng-model="message.subject" id="toEmployee" name="toEmployee"
+               class="form-control" type="text">
+        <input ng-show="isReadOnly" ng-readonly="isReadOnly" value="{{message.subject || '(no subject)'}}"
+               id="toEmployee" name="toEmployee" class="form-control" type="text">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-lable col-xs-2" for="toEmployee">Content:</label>
+      <div class="col-xs-6">
+        <textarea ng-model="message.content" ng-readonly="isReadOnly" id="toEmployee" name="toEmployee"
+                  class="form-control" rows=5 cols=70></textarea>
+      </div>
+    </div>
+
+  </form>
+</div>
