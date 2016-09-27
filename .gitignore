@@ -4,6 +4,10 @@ client/node_modules/*
 client/sbb/*
 **/.sass-cache/*
 
+# Vim files
+*~
+.*.sw*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
