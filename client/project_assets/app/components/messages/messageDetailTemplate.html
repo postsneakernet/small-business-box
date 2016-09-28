@@ -15,7 +15,8 @@
     </div>
 
     <!-- to employee dropdown search -->
-    <div class="form-group" ng-hide="isReadOnly || isReply">
+    <div class="form-group" ng-hide="isReadOnly || isReply"
+         ng-class="{ 'has-error': !composeMessage.to_employee_id && hasSearched }">
       <label class="control-lable col-xs-2" for="to_employee_id">To:</label>
       <div class="col-xs-6">
         <div class="input-group">

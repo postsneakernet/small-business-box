@@ -18,6 +18,7 @@ var angularSelect = bower + 'angular-ui-select/dist/';
 var angularSanitize = bower + 'angular-sanitize/';
 var spin = bower + 'spin.js/';
 var angularSpinner = bower + 'angular-spinner/';
+var angularAnimate = bower + 'angular-animate/';
 
 var project = './' + pkg.name + '/';
 var projectAssets = './project_assets/';
@@ -49,7 +50,9 @@ var vendorPaths = {
             angularSpinner + 'angular-spinner.js',
             angularSpinner + 'angular-spinner-min.js',
             spin + 'spin.js',
-            spin + 'spin.min.js'
+            spin + 'spin.min.js',
+            angularAnimate + 'angular-animate.js',
+            angularAnimate + 'angular-animate.min.js'
     ]
 };
 
@@ -77,7 +80,8 @@ var watchPaths = {
         srcPaths.js,
         srcPaths.app,
         app + '**/*.html',
-        app + '**/*.js'
+        app + '**/*.js',
+        '!**/.*.swp'
     ]
 };
 
@@ -138,7 +142,9 @@ gulp.task('lint', function () {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(watchPaths.all, ['default']);
+    gulp.watch(watchPaths.all, ['default']).on('change', function (event) {
+        gutil.log(gutil.colors.magenta('Watch triggered by: '), event);
+    });
 });
 
 gulp.task('scripts', ['lint'], function () {

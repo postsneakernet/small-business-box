@@ -9,6 +9,8 @@
 
             return $http.get(url).then(function (response) {
                 return response.data;
+            }, function (response) {
+                return $q.reject();
             });
         };
 
@@ -27,18 +29,21 @@
 
                 return $http.get(url).then(function (response) {
                     return response.data;
+                }, function (response) {
+                    return $q.reject();
                 });
             } else {
                 var searchFirst = $http.get(url + filter + 'first_name,eq,' + split[0]);
                 var searchLast = $http.get(url + filter + 'last_name,eq,' + split[0]);
 
-                return $q.all([searchFirst, searchLast]).then(function (data) {
-                    var employees = data[0].data.employees;
-                    employees.push.apply(employees, data[1].data.employees);
+                return $q.all([searchFirst, searchLast]).then(function (response) {
+                    var employees = response[0].data.employees;
+                    employees.push.apply(employees, response[1].data.employees);
                     return { employees: employees };
+                }, function (response) {
+                    return $q.reject();
                 });
             }
-
         };
     });
 })();

@@ -30,6 +30,8 @@
 
             return $http.get(_url + filter).then(function (response) {
                 return response.data;
+            }, function (response) {
+                return $q.reject();
             });
         };
 
@@ -40,6 +42,8 @@
 
             return $http.get(url).then(function (response) {
                 return response.data;
+            }, function (response) {
+                return $q.reject();
             });
         };
 
@@ -51,7 +55,7 @@
             return $http.put(url, data).then(function (response) {
                 return response.data;
             }, function (response) {
-                console.log("there was an issue updating message");
+                return $q.reject();
             });
         };
 
@@ -59,7 +63,7 @@
             return $http.post($rootScope.endpoints.messages_url, data).then(function (response) {
                 return response.data;
             }, function (response) {
-                console.log("there was an issue sending message");
+                return $q.reject();
             });
         };
     });

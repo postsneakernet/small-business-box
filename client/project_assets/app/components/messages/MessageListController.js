@@ -2,7 +2,8 @@
     var app = angular.module('sbb');
 
     app.controller('MessageListController',
-                   function ($scope, $location, $timeout, $state, $stateParams, MessageService, EmployeeService) {
+                function ($scope, $location, $timeout, $state, $stateParams, MessageService,
+                        EmployeeService, messageConfig) {
         $scope.title = $stateParams.filter || 'Inbox';
         $scope.filter = $stateParams.filter;
         $scope.state = $state;
@@ -41,6 +42,9 @@
                     getMessages($scope.meta.prev_url);
                 };
 
+                $scope.stopSpin();
+            }, function (data) {
+                $scope.addAlert(messageConfig.fetchAllError, true);
                 $scope.stopSpin();
             });
         }

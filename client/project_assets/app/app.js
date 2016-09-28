@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('sbb', ['ui.router', 'ngSanitize', 'ui.select', 'angularSpinner']);
+    var app = angular.module('sbb', ['ui.router', 'ngSanitize', 'ui.select', 'angularSpinner', 'ngAnimate']);
 
     app.config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/dashboard');
@@ -11,6 +11,9 @@
         (function () {
             $http.get("http://localhost:5000").then( function (response) {
                 $rootScope.endpoints = response.data.versions.v1;
+            }, function (response) {
+                console.log('Failed to get resource endpoints from server');
+                $rootScope.appError = 'There was an error communicating with server. Please try again later.';
             });
         })();
 

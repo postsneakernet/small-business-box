@@ -1,8 +1,8 @@
 (function () {
     var app = angular.module('sbb');
 
-    app.controller('MessageDetailController',
-                   function ($rootScope, $scope, $state, $stateParams, MessageService, EmployeeService) {
+    app.controller('MessageDetailController', function ($rootScope, $scope, $state, $stateParams,
+            MessageService, EmployeeService, messageConfig, employeeConfig) {
         if ($state.is('app.messages.detail')) {
             $scope.title = 'Message Detail';
             $scope.filter = $stateParams.filter;
@@ -19,12 +19,18 @@
 
                 if ($scope.filter !== 'outbox' && $scope.message && $scope.message.is_unread) {
                     MessageService.markMessageAsRead($scope.message.self_url,
-                                {is_unread: false}).then(function (data) {
+                            {is_unread: false}).then(function (data) {
+                        $scope.stopSpin();
+                    }, function (data) {
+                        $scope.addAlert(messageConfig.markReadError, true);
                         $scope.stopSpin();
                     });
                 } else {
                     $scope.stopSpin();
                 }
+            }, function (data) {
+                $scope.addAlert(messageConfig.fetchError, true);
+                $scope.stopSpin();
             });
         } else {
             $scope.title = 'Compose';
@@ -44,10 +50,14 @@
 
                     $scope.addEmployeeInfo($scope.message);
                     $scope.stopSpin();
+                }, function (data) {
+                    $scope.addAlert(messageConfig.fetchError, true);
+                    $scope.stopSpin();
                 });
             } else {
                 $scope.employeeArray = [];
                 $scope.selectedEmployee = {};
+                $scope.hasSearched = false;
             }
         }
 
@@ -56,6 +66,10 @@
                 $scope.startSpin();
                 MessageService.sendMessage($scope.composeMessage).then(function (data) {
                     $state.go('app.messages.list', {filter: 'inbox'});
+                    $scope.addAlert(messageConfig.sendSuccess);
+                    $scope.stopSpin();
+                }, function (data) {
+                    $scope.addAlert(messageConfig.sendError, true);
                     $scope.stopSpin();
                 });
             }
@@ -76,6 +90,7 @@
 
         $scope.searchEmployee = function (employee) {
             if (employee.length > 0) {
+                $scope.hasSearched = true;
                 $scope.startSpin();
                 EmployeeService.findEmployee(employee).then(function (data) {
                     if (data.employees.length > 0) {
@@ -85,6 +100,9 @@
                         }
                         $scope.employeeArray = employees;
                     }
+                    $scope.stopSpin();
+                }, function (data) {
+                    $scope.addAlert(employeeConfig.searchError, true);
                     $scope.stopSpin();
                 });
             }

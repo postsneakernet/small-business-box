@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('sbb');
 
-    app.controller('MessageController', function ($scope, $state, EmployeeService) {
+    app.controller('MessageController', function ($scope, $state, EmployeeService, employeeConfig) {
         $scope.search = {query: '', option: 'content'};
 
         $scope.setParentSearch = function setSearch() {
@@ -16,6 +16,8 @@
                 EmployeeService.getEmployee(message.from_employee_public_url).then(function (data) {
                     message.fromEmployee = data;
                     //$scope.stopSpin();
+                }, function (data) {
+                    $scope.addAlert(employeeConfig.fetchError, true);
                 });
             }
 
@@ -24,6 +26,8 @@
                 EmployeeService.getEmployee(message.to_employee_public_url).then(function (data) {
                     message.toEmployee = data;
                     //$scope.stopSpin();
+                }, function (data) {
+                    $scope.addAlert(employeeConfig.fetchError, true);
                 });
             }
         };

@@ -49,6 +49,24 @@ div.select-search-box > div > span.ui-select-toggle.form-control.btn-default.btn
     top: 36px;
 }
 
+.animate-alert.ng-move,
+.animate-alert.ng-enter,
+.animate-alert.ng-leave {
+    transition:all linear 0.5s;
+}
+
+.animate-alert.ng-leave-active,
+.animate-alert.ng-move,
+.animate-alert.ng-enter {
+    opacity:0;
+}
+
+.animate-alert.ng-leave,
+.animate-alert.ng-move.ng-move-active,
+.animate-alert.ng-enter.ng-enter-active {
+    opacity:1;
+}
+
 .container .text-muted {
   margin: 20px 0;
 }

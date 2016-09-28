@@ -1,3 +1,23 @@
 <div class="container">
+  <div class="app-spinner"><span us-spinner spinner-key="app-spinner"></span></div>
+  <div ng-show="stateIsLoading" class="app-spinner"><span us-spinner></span></div>
+
+  <div>
+  <div ng-show="appError" class="animate-alert">
+    <div class="alert alert-danger" role="alert"><strong>Application Error:</strong> {{appError}}</div>
+  </div>
+  </div>
+
+  <div>
+  <div ng-repeat="a in alerts | limitTo: alertLimit | orderBy: '-'" class="animate-alert">
+    <div ng-class="a.alertType" class="alert alert-dismissible" role="alert">
+      <button ng-click="removeAlert(a)" type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{a.alertMessage}}
+    </div>
+  </div>
+  </div>
+
   <ui-view></ui-view>
 </div>
