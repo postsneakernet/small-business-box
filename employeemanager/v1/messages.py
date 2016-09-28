@@ -30,6 +30,7 @@ def get_message(id):
 
 
 @api.route('/messages/', methods=['POST'])
+@cors
 @json()
 def new_message():
     message = Message().import_data(request.get_json(force=True))
@@ -39,16 +40,18 @@ def new_message():
 
 
 @api.route('/messages/<int:id>', methods=['PUT'])
+@cors
 @json()
 def update_message(id):
     message = Message.query.get_or_404(id)
-    message.import_data(request.get_json(force=True))
+    message.update_data(request.get_json(force=True))
     db.session.add(message)
     db.session.commit()
     return {}
 
 
 @api.route('/messages/<int:id>', methods=['DELETE'])
+@cors
 @json()
 def delete_message(id):
     message = Message.query.get_or_404(id)

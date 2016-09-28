@@ -20,8 +20,8 @@
 
     <div>
       <span>
-        <button class="btn" ng-disabled="!meta.prev_url" ng-click="getPrev()">Prev</button>
-        <button class="btn" ng-disabled="!meta.next_url" ng-click="getNext()">Next</button>
+        <button ng-disabled="!meta.prev_url" ng-click="getPrev()" class="btn">Prev</button>
+        <button ng-disabled="!meta.next_url" ng-click="getNext()" class="btn">Next</button>
         <span>{{minMessage}} - {{maxMessage}} of {{meta.total}} messages</span>
       </span>
     </div>

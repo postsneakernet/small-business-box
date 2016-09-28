@@ -2,7 +2,7 @@
     var app = angular.module('sbb');
 
     app.controller('MessageListController',
-                   function ($scope, $location, $state, $stateParams, MessageService, EmployeeService) {
+                   function ($scope, $location, $timeout, $state, $stateParams, MessageService, EmployeeService) {
         $scope.title = $stateParams.filter || 'Inbox';
         $scope.filter = $stateParams.filter;
         $scope.state = $state;
@@ -22,6 +22,7 @@
                 $location.url($location.path());
             }
 
+            $scope.startSpin();
             MessageService.getMessages($scope.filter, $scope.search, url).then(function (data) {
                 $scope.messages = data.messages;
                 $scope.meta = data.meta;
@@ -39,6 +40,8 @@
                 $scope.getPrev = function () {
                     getMessages($scope.meta.prev_url);
                 };
+
+                $scope.stopSpin();
             });
         }
 

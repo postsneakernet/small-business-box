@@ -26,7 +26,7 @@
 
     <span ng-hide="isReadOnly">
       <a ui-sref="app.messages.list({filter: 'inbox'})"><button class="btn">Cancel</button></a>
-      <a ui-sref="app.messages.compose"><button class="btn">Send</button></a>
+      <button ng-disabled="messageForm.$invalid" class="btn" type="submit" form="messageForm">Send</button>
     </span>
 
     <message-detail></message-detail>

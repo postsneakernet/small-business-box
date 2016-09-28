@@ -1,39 +1,76 @@
 <div class="message-form">
-  <form id="messageForm" name="messageForm" class="form-horizontal">
+  <form ng-submit="sendMessage(messageForm.$valid)" id="messageForm" name="messageForm" class="form-horizontal" novalidate>
 
-    <div class="form-group">
-      <label class="control-lable col-xs-2" for="toEmployee">To:</label>
+    <div class="form-group" ng-show="isReadOnly || isReply"
+         ng-class="{ 'has-error': messageForm.to_employee_id.$invalid && !messageForm.to_employee_id.$pristine }">
+      <label class="control-lable col-xs-2" for="to_employee_id">To:</label>
       <div class="col-xs-6">
-        <input ng-show="isReply" value="{{message.fromEmployee.first_name}} {{message.fromEmployee.last_name}}"
-               ng-readonly="isReply" id="toEmployee" name="toEmployee" class="form-control" type="text">
-        <input ng-hide="isReply" value="{{message.toEmployee.first_name}} {{message.toEmployee.last_name}}"
-               ng-readonly="isReadOnly" id="toEmployee" name="toEmployee" class="form-control" type="text">
+        <input ng-show="isReadOnly" ng-readonly="isReadOnly"
+               value="{{message.toEmployee.first_name}} {{message.toEmployee.last_name}}"
+               id="to_employee_id" name="to_employee_id" class="form-control" type="text">
+        <input ng-show="isReply" ng-readonly="isReply"
+               value="{{message.fromEmployee.first_name}} {{message.fromEmployee.last_name}}"
+               id="to_employee_id" name="to_employee_id" class="form-control" type="text">
       </div>
     </div>
 
-    <div class="form-group" ng-show="isReadOnly">
-      <label class="control-lable col-xs-2" for="toEmployee">From:</label>
+    <!-- to employee dropdown search -->
+    <div class="form-group" ng-hide="isReadOnly || isReply">
+      <label class="control-lable col-xs-2" for="to_employee_id">To:</label>
       <div class="col-xs-6">
-        <input value="{{message.fromEmployee.first_name}} {{message.fromEmployee.last_name || '(system)'}}"
-               ng-readonly="isReadOnly" id="toEmployee" name="toEmployee" class="form-control" type="text">
+        <div class="input-group">
+
+          <ui-select ng-model="selectedEmployee.employee" ng-change="updateToEmployee()"
+                     ng-required="!isReadOnly && !isReply"
+                     class="select-search-box">
+            <ui-select-match placeholder="Search for employee...">
+              <span ng-bind="$select.selected.name"></span>
+            </ui-select-match>
+            <ui-select-choices repeat="employee in (employeeArray | filter: $select.search) track by employee.id"
+                               refresh="searchEmployee($select.search)">
+              <span ng-bind="employee.name"></span>
+            </ui-select-choices>
+          </ui-select>
+
+          <span class="input-group-btn">
+            <button type="button" ng-click="clearSelectedEmployee()" class="btn btn-default">
+              <span class="glyphicon glyphicon-trash"></span>
+            </button>
+          </span>
+
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="isReadOnly" class="form-group">
+      <label class="control-lable col-xs-2" for="from_employee_id">From:</label>
+      <div class="col-xs-6">
+        <input ng-readOnly="isReadOnly"
+               value="{{message.fromEmployee.first_name}} {{message.fromEmployee.last_name || '(system)'}}"
+               id="from_Employee_id" name="from_employee_id" class="form-control" type="text">
       </div>
     </div>
 
     <div class="form-group">
-      <label class="control-lable col-xs-2" for="toEmployee">Subject:</label>
+      <label class="control-lable col-xs-2" for="subject">Subject:</label>
       <div class="col-xs-6">
-        <input ng-hide="isReadOnly" ng-model="message.subject" id="toEmployee" name="toEmployee"
-               class="form-control" type="text">
         <input ng-show="isReadOnly" ng-readonly="isReadOnly" value="{{message.subject || '(no subject)'}}"
-               id="toEmployee" name="toEmployee" class="form-control" type="text">
+               id="subject" name="subject" class="form-control" type="text">
+        <input ng-hide="isReadOnly" ng-model="composeMessage.subject"
+               id="subject" name="subject"
+               class="form-control" type="text">
       </div>
     </div>
 
-    <div class="form-group">
-      <label class="control-lable col-xs-2" for="toEmployee">Content:</label>
+    <div class="form-group"
+         ng-class="{ 'has-error': messageForm.content.$invalid && !messageForm.content.$pristine }">
+      <label class="control-lable col-xs-2" for="content">Content:</label>
       <div class="col-xs-6">
-        <textarea ng-model="message.content" ng-readonly="isReadOnly" id="toEmployee" name="toEmployee"
+        <textarea ng-show="isReadOnly" ng-model="message.content" ng-readonly="isReadOnly"
+                  id="content" name="content"
                   class="form-control" rows=5 cols=70></textarea>
+        <textarea ng-hide="isReadOnly" ng-model="composeMessage.content" id="content" name="content"
+                  class="form-control" rows=5 cols=70 ng-required="!isReadOnly"></textarea>
       </div>
     </div>
 

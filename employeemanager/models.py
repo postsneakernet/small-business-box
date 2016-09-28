@@ -323,8 +323,10 @@ class Message(db.Model):
                                                   id=self.to_employee_id, _external=True),
                 'to_employee_url': url_for('api.get_employee',
                                            id=self.to_employee_id, _external=True),
+                'to_employee_id': self.to_employee_id,
                 'from_employee_public_url': from_employee_public_url,
                 'from_employee_url': from_employee_url,
+                'from_employee_id': self.from_employee_id,
                 'is_unread': self.is_unread,
                 'date': self.date}
 
@@ -332,13 +334,18 @@ class Message(db.Model):
         try:
             self.content = data['content']
             self.to_employee_id = data['to_employee_id']
-            self.from_employee_id = data['from_employee_id']
-            self.is_unread = data['is_unread']
 
             if 'subject' in data:
                 self.subject = data['subject']
             if 'from_employee_id' in data:
                 self.from_employee_id = data['from_employee_id']
+        except KeyError as e:
+            raise ValidationError('Invalid message: missing ' + e.args[0])
+        return self
+
+    def update_data(self, data):
+        try:
+            self.is_unread = data['is_unread']
         except KeyError as e:
             raise ValidationError('Invalid message: missing ' + e.args[0])
         return self

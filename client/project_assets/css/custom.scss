@@ -25,8 +25,28 @@ body {
     border-radius: 0px;
 }
 
+.app-spinner {
+    position: absolute;
+    left: 30px;
+    top: 24px;
+}
+
 .message-form {
     margin-top: 20px;
+}
+
+div.select-search-box > div > span.ui-select-toggle.form-control.btn-default.btn {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.select2 > .select2-choice.ui-select-match {
+    /* Because of the inclusion of Bootstrap */
+    height: 29px;
+}
+
+.selectize-control > .selectize-dropdown {
+    top: 36px;
 }
 
 .container .text-muted {

@@ -10,6 +10,7 @@ def cors(f):
         rv = make_response(rv)
         rv.headers['Access-Control-Allow-Origin'] = '*'
         rv.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+        rv.headers['Access-Control-Allow-Methods'] = 'GET,PUT,POST,DELETE,OPTIONS'
         return rv
     return wrapped
 
@@ -46,7 +47,7 @@ def json(custom_data=None):
 def _filter_query(model, query, filter_spec):
     filters = [f.split(',') for f in filter_spec.split(';')]
     for f in filters:
-        if len(f) == 2 and (f[1] == 'null' or f[1] == 'not_null'):
+        if len(f) == 2 and f[1] in ['null', 'not_null']:
             f.append(None)
         elif len(f) < 3 or (len(f) > 3 and f[1] != 'in'):
             continue

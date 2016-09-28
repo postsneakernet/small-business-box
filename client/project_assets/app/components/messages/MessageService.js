@@ -1,14 +1,11 @@
 (function () {
     var app = angular.module('sbb');
 
-    app.service('MessageService', function ($http, $q, $rootScope) {
-        var expand = '?expand=1';
+    app.service('MessageService', function ($http, $q, $rootScope, serviceConfig) {
         var sort = '&sort=date,desc';
-        var perPage = '&per_page=1';
-        var _filter = '&filter=';
-        var inbox = _filter + 'to_employee_id,eq,' + $rootScope.currentUser.id;
-        var outbox = _filter + 'from_employee_id,eq,' + $rootScope.currentUser.id;
-        var baseUrl = $rootScope.currentUser.message_url + expand + sort + perPage;
+        var inbox = serviceConfig.filter + 'to_employee_id,eq,' + $rootScope.currentUser.id;
+        var outbox = serviceConfig.filter + 'from_employee_id,eq,' + $rootScope.currentUser.id;
+        var baseUrl = $rootScope.currentUser.message_url + serviceConfig.expand + serviceConfig.perPage + sort;
         var validOptions = ['content', 'subject'];
 
         this.getMessages = function (filter, search, url) {
@@ -25,7 +22,8 @@
                 filter = inbox + ';from_employee_id,null';
             } else if (filter === 'search') {
                 filter = (search.query && search.option && validOptions.indexOf(search.option) >= 0) ?
-                    _filter + search.option + ',like,%' + search.query + '%' : _filter + 'content,null';
+                    serviceConfig.filter + search.option + ',like,%' + search.query + '%' :
+                    serviceConfig.filter + 'content,null';
             } else {
                 filter = inbox;
             }
@@ -42,6 +40,26 @@
 
             return $http.get(url).then(function (response) {
                 return response.data;
+            });
+        };
+
+        this.markMessageAsRead = function (url, data) {
+            if (url === null) {
+                return $q.when(null);
+            }
+
+            return $http.put(url, data).then(function (response) {
+                return response.data;
+            }, function (response) {
+                console.log("there was an issue updating message");
+            });
+        };
+
+        this.sendMessage = function (data) {
+            return $http.post($rootScope.endpoints.messages_url, data).then(function (response) {
+                return response.data;
+            }, function (response) {
+                console.log("there was an issue sending message");
             });
         };
     });

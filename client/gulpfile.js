@@ -1,4 +1,5 @@
 /* gulpfile.js */
+/* jshint esversion: 6 */
 
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
@@ -10,40 +11,57 @@ var pkg = require('./package.json');
 
 var bower = './bower_components/';
 var bootstrap = bower + 'bootstrap/dist/';
-var jquery = bower + 'jquery/dist/'
-var angular = bower + 'angular/'
-var angularUiRouter = bower + 'angular-ui-router/release/'
+var jquery = bower + 'jquery/dist/';
+var angular = bower + 'angular/';
+var angularUiRouter = bower + 'angular-ui-router/release/';
+var angularSelect = bower + 'angular-ui-select/dist/';
+var angularSanitize = bower + 'angular-sanitize/';
+var spin = bower + 'spin.js/';
+var angularSpinner = bower + 'angular-spinner/';
 
 var project = './' + pkg.name + '/';
 var projectAssets = './project_assets/';
 var assets = project + 'assets/';
 
+var gulpfile = 'gulpfile.js';
 var app = projectAssets + 'app/';
 var scripts = projectAssets + 'js/**/*.js';
 
 var vendorPaths = {
-    css: bootstrap + 'css/*',
+    css: [
+            bootstrap + 'css/*',
+            angularSelect + '*.css'
+    ],
     fonts: bootstrap + 'fonts/*',
     js: [
             bootstrap + 'js/bootstrap.js',
             bootstrap + 'js/bootstrap.min.js',
+            angularSelect + 'select.js',
+            angularSelect + 'select.min.js',
             jquery + 'jquery.js',
             jquery + 'jquery.min.js',
             angular + 'angular.js',
             angular + 'angular.min.js',
             angularUiRouter + 'angular-ui-router.js',
-            angularUiRouter + 'angular-ui-router.min.js'
+            angularUiRouter + 'angular-ui-router.min.js',
+            angularSanitize + 'angular-sanitize.js',
+            angularSanitize + 'angular-sanitize.min.js',
+            angularSpinner + 'angular-spinner.js',
+            angularSpinner + 'angular-spinner-min.js',
+            spin + 'spin.js',
+            spin + 'spin.min.js'
     ]
 };
 
 var srcPaths = {
     index: projectAssets + 'index.html',
-    css: projectAssets + 'css/*.scss',
+    css: projectAssets + 'css/custom.scss',
     img: [
         projectAssets + 'img/*.jpg',
         projectAssets + 'img/*.png'
     ],
     js: [
+            gulpfile,
             app + '**/*.js',
             scripts
     ],

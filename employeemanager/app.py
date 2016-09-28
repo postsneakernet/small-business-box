@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 from employeemanager.config import DevelopmentConfig
 from employeemanager.models import db
@@ -16,6 +16,18 @@ def create_app():
 
     from employeemanager.views import core as core_blueprint
     app.register_blueprint(core_blueprint)
+
+    @app.before_request
+    def before_request():
+        if request.method == 'OPTIONS':
+            resp = app.make_default_options_response()
+
+            h = resp.headers
+            h['Access-Control-Allow-Origin'] = '*'
+            h['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+            h['Access-Control-Allow-Methods'] = 'GET, PUT, POST, DELETE, OPTIONS'
+
+            return resp
 
     @app.errorhandler(404)
     def not_found_error(e):

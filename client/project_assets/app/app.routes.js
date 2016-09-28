@@ -30,9 +30,10 @@
                         templateUrl: 'app/shared/nav/app.html'
                     },
                     '': {
-                        templateUrl: 'app/shared/content.html'
+                        templateUrl: 'app/shared/content.html',
+                        controller: 'AppController'
                     }
-                }
+                },
             })
             .state('app.profile', {
                 url: '/profile',

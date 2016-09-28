@@ -6,21 +6,24 @@
 
         $scope.setParentSearch = function setSearch() {
             $state.go('app.messages.list',
-                { filter: 'search', option: $scope.search.option, query: $scope.search.query },
-                { reload: true }
+                { filter: 'search', option: $scope.search.option, query: $scope.search.query }
             );
         };
 
         $scope.addEmployeeInfo = function (message) {
             if (message && message.from_employee_public_url) {
+                //$scope.startSpin();
                 EmployeeService.getEmployee(message.from_employee_public_url).then(function (data) {
                     message.fromEmployee = data;
+                    //$scope.stopSpin();
                 });
             }
 
             if(message) {
+                //$scope.startSpin();
                 EmployeeService.getEmployee(message.to_employee_public_url).then(function (data) {
                     message.toEmployee = data;
+                    //$scope.stopSpin();
                 });
             }
         };

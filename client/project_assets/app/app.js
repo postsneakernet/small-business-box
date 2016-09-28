@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module('sbb', ['ui.router']);
+    var app = angular.module('sbb', ['ui.router', 'ngSanitize', 'ui.select', 'angularSpinner']);
 
     app.config(function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/dashboard');
@@ -10,9 +10,17 @@
 
         (function () {
             $http.get("http://localhost:5000").then( function (response) {
-                $rootScope.endpoints = response.data.versions;
+                $rootScope.endpoints = response.data.versions.v1;
             });
         })();
+
+        $rootScope.$on('$stateChangeStart', function () {
+            $rootScope.stateIsLoading = true;
+        });
+
+        $rootScope.$on('$stateChangeSuccess', function () {
+            $rootScope.stateIsLoading = false;
+        });
 
         // temp
         $rootScope.currentUser = {
