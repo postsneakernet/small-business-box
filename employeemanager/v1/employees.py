@@ -36,6 +36,7 @@ def get_employee(id):
 
 
 @api.route('/employees/', methods=['POST'])
+@cors
 @json()
 def new_employee():
     employee = Employee().import_data(request.get_json(force=True))
@@ -45,6 +46,7 @@ def new_employee():
 
 
 @api.route('/employees/<int:id>', methods=['PUT'])
+@cors
 @json()
 def update_employee(id):
     employee = Employee.query.get_or_404(id)
@@ -55,6 +57,7 @@ def update_employee(id):
 
 
 @api.route('/employees/<int:id>', methods=['DELETE'])
+@cors
 @json()
 def delete_employee(id):
     employee = Employee.query.get_or_404(id)

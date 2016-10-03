@@ -5,7 +5,7 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_sqlalchemy import SQLAlchemy
 from flask import url_for, current_app
 
-from employeemanager.errors import ValidationError
+from employeemanager.errors import ValidationError, AuthenticationError
 
 
 db = SQLAlchemy()
@@ -45,6 +45,8 @@ class Employee(db.Model):
     first_name = db.Column(db.String(64), nullable=False)
     last_name = db.Column(db.String(64), nullable=False)
     ssn = db.Column(db.String(11), nullable=False)
+    dob = db.Column(db.Date, nullable=False)
+    job_title = db.Column(db.String(64), nullable=False)
     start_date = db.Column(db.Date, default=datetime.date.today())
     end_date = db.Column(db.Date)
     pay_rate = db.Column(db.Float, nullable=False)
@@ -76,9 +78,14 @@ class Employee(db.Model):
         if self.contact:
             contact_url = url_for('api.get_contact', id=self.contact.id, _external=True)
 
+        credential_url = None
+        if self.credential:
+            credential_url = url_for('api.get_credential', id=self.credential.id, _external=True)
+
         return {'message_url': message_url,
                 'department_url': department_url,
-                'contact_url': contact_url}
+                'contact_url': contact_url,
+                'credential_url': credential_url}
 
     def export_data(self):
         urls = self.build_external_urls()
@@ -88,13 +95,17 @@ class Employee(db.Model):
                 'first_name': self.first_name,
                 'last_name': self.last_name,
                 'ssn': self.ssn,
+                'dob': self.dob,
+                'job_title': self.job_title,
                 'start_date': self.start_date,
                 'end_date': self.end_date,
                 'pay_rate': self.pay_rate,
                 'is_hourly': self.is_hourly,
                 'message_url': urls['message_url'],
                 'contact_url': urls['contact_url'],
-                'department_url': urls['department_url']}
+                'department_url': urls['department_url'],
+                'department_id': self.department_id,
+                'credential_url': urls['credential_url']}
 
     def export_public_data(self):
         urls = self.build_external_urls()
@@ -103,14 +114,18 @@ class Employee(db.Model):
                 'self_url': self.get_public_url(),
                 'first_name': self.first_name,
                 'last_name': self.last_name,
+                'job_title': self.job_title,
                 'contact_url': urls['contact_url'],
-                'department_url': urls['department_url']}
+                'department_url': urls['department_url'],
+                'department_id': self.department_id}
 
     def import_data(self, data):
         try:
             self.first_name = data['first_name']
             self.last_name = data['last_name']
             self.ssn = data['ssn']
+            self.dob = data['dob']
+            self.job_title = data['job_title']
             self.pay_rate = data['pay_rate']
             self.is_hourly = data['is_hourly']
 
@@ -133,7 +148,7 @@ class Manager(db.Model):
                               unique=True, nullable=False)
     employee_id = db.Column('employee_id', db.Integer,
                             db.ForeignKey('employees.id', ondelete='CASCADE'),
-                            nullable=False)
+                            unique=True, nullable=False)
 
     department = db.relationship('Department', back_populates='manager')
 
@@ -146,8 +161,10 @@ class Manager(db.Model):
                 'employee_url': url_for('api.get_employee', id=self.employee_id, _external=True),
                 'employee_public_url': url_for('api.get_employee_public',
                                                id=self.employee_id, _external=True),
+                'employee_id': self.employee_id,
                 'department_url': url_for('api.get_department',
-                                          id=self.department_id, _external=True)}
+                                          id=self.department_id, _external=True),
+                'department_id': self.department_id}
 
     def import_data(self, data):
         try:
@@ -187,7 +204,8 @@ class Contact(db.Model):
                 'email': self.email,
                 'employee_public_url': url_for('api.get_employee_public',
                                                id=self.employee_id, _external=True),
-                'employee_url': url_for('api.get_employee', id=self.employee_id, _external=True)}
+                'employee_url': url_for('api.get_employee', id=self.employee_id, _external=True),
+                'employee_id': self.employee_id}
 
     def import_data(self, data):
         try:
@@ -245,10 +263,15 @@ class Credential(db.Model):
         return url_for('api.get_credential', id=self.id, _external=True)
 
     def export_data(self):
+        admin_url = None
+        if self.admin:
+            admin_url = url_for('api.get_admin', id=self.admin.id, _external=True)
+
         return {'id': self.id,
                 'self_url': self.get_url(),
                 'username': self.username,
-                'employee_url': url_for('api.get_employee', id=self.employee_id, _external=True)}
+                'employee_url': url_for('api.get_employee', id=self.employee_id, _external=True),
+                'admin_url': admin_url}
 
     def import_data(self, data):
         try:
@@ -260,6 +283,19 @@ class Credential(db.Model):
             else:
                 e = Employee.query.get(data['employee_id'])
                 self.password = e.ssn
+        except KeyError as e:
+            raise ValidationError('Invalid credential: missing ' + e.args[0])
+        return self
+
+    def update_data(self, data):
+        try:
+            if not self.verify_password(data['password']):
+                raise AuthenticationError('Invalid password provided')
+
+            self.username = data['username']
+
+            if 'new_password' in data:
+                self.password = data['new_password']
         except KeyError as e:
             raise ValidationError('Invalid credential: missing ' + e.args[0])
         return self

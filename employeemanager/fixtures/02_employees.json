@@ -6,6 +6,8 @@
                 "first_name": "Abe",
                 "last_name": "Anderson",
                 "ssn": "123-45-1001",
+                "dob": "1981-01-11",
+                "job_title": "clerk",
                 "pay_rate": 25,
                 "is_hourly": true
             },
@@ -13,6 +15,8 @@
                 "first_name": "Bob",
                 "last_name": "Banner",
                 "ssn": "123-45-1002",
+                "dob": "1982-02-11",
+                "job_title": "clerk",
                 "pay_rate": 20,
                 "is_hourly": false,
                 "department_id": 1
@@ -21,6 +25,8 @@
                 "first_name": "Cat",
                 "last_name": "Casey",
                 "ssn": "123-45-1003",
+                "dob": "1983-03-11",
+                "job_title": "designer",
                 "pay_rate": 35,
                 "is_hourly": false,
                 "department_id": 2
@@ -29,6 +35,8 @@
                 "first_name": "Dan",
                 "last_name": "Dixon",
                 "ssn": "123-45-1004",
+                "dob": "1984-04-11",
+                "job_title": "designer",
                 "pay_rate": 27.5,
                 "is_hourly": true,
                 "department_id": 2
@@ -37,6 +45,8 @@
                 "first_name": "Edd",
                 "last_name": "Erikson",
                 "ssn": "123-45-1005",
+                "dob": "1985-05-11",
+                "job_title": "scientist",
                 "pay_rate": 40,
                 "is_hourly": false,
                 "department_id": 3
@@ -45,6 +55,8 @@
                 "first_name": "Fay",
                 "last_name": "Farley",
                 "ssn": "123-45-1006",
+                "dob": "1986-06-11",
+                "job_title": "scientist",
                 "pay_rate": 38,
                 "is_hourly": false,
                 "department_id": 3
@@ -53,6 +65,8 @@
                 "first_name": "Gary",
                 "last_name": "Grayson",
                 "ssn": "123-45-1007",
+                "dob": "1987-07-11",
+                "job_title": "engineer",
                 "pay_rate": 22,
                 "is_hourly": true,
                 "department_id": 3
@@ -61,6 +75,8 @@
                 "first_name": "Han",
                 "last_name": "Henries",
                 "ssn": "123-45-1008",
+                "dob": "1988-08-11",
+                "job_title": "engineer",
                 "pay_rate": 45,
                 "is_hourly": false,
                 "department_id": 4

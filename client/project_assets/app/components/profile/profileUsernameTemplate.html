@@ -1,0 +1,39 @@
+<h4 ng-show="showChangeUsername">Change Username</h4>
+<button ng-show="!showChangeUsername" ng-click="toggleShowChangeUsername()" class="btn btn-default"
+        type="button">Change Username</button>
+<div ng-show="showChangeUsername" class="profile-form">
+  <form ng-submit="saveUsername(changeUsernameForm.$valid && !usernameExists)" id="changeUsernameForm" name="changeUsernameForm"
+        class="form-horizontal" novalidate>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': usernameExists || changeUsernameForm.username.$invalid && !changeUsernameForm.username.$pristine }">
+      <label class="control-label col-xs-3" for="username">New Username:</label>
+      <div class="col-xs-6">
+        <input ng-model="changeUsername.username" ng-change="checkUsernameExists(changeUsername.username)"
+               ng-model-options="{debounce: 750}" id="username" name="username"
+               class="form-control" type="text" placeholder="Enter username" ng-required="true">
+      </div>
+      <div class="col-xs-6">
+        <span ng-show="usernameExists">Username exists</span>
+      </div>
+    </div>
+
+    <div class="form-group"
+         ng-class="{ 'has-error': changeUsernameForm.password.$invalid && !changeUsernameForm.password.$pristine }">
+      <label class="control-label col-xs-3" for="password">Password:</label>
+      <div class="col-xs-6">
+        <input ng-model="changeUsername.password" id="password" name="password"
+               class="form-control" type="password" placeholder="Enter password" ng-required="true">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-xs-offset-3 col-xs-5">
+        <button ng-disabled="changeUsernameForm.$invalid || usernameExists" class="btn btn-default"
+                type="submit">Save</button>
+        <button ng-click="toggleShowChangeUsername()" class="btn btn-default" type="button">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>

@@ -37,7 +37,8 @@
             })
             .state('app.profile', {
                 url: '/profile',
-                template: '<h1>Profile</h1>'
+                templateUrl: 'app/components/profile/profileView.html',
+                controller: 'ProfileController'
             })
             .state('app.employees', {
                 url: '/employees',

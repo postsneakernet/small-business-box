@@ -2,8 +2,7 @@
     var app = angular.module('sbb');
 
     app.controller('MessageListController',
-                function ($scope, $location, $timeout, $state, $stateParams, MessageService,
-                        EmployeeService, messageConfig) {
+                function ($scope, $location, $timeout, $state, $stateParams, MessageService, messageConfig) {
         $scope.title = $stateParams.filter || 'Inbox';
         $scope.filter = $stateParams.filter;
         $scope.state = $state;

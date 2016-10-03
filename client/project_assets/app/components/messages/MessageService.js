@@ -34,37 +34,5 @@
                 return $q.reject();
             });
         };
-
-        this.getMessage = function (url) {
-            if (url === null) {
-                return $q.when(null);
-            }
-
-            return $http.get(url).then(function (response) {
-                return response.data;
-            }, function (response) {
-                return $q.reject();
-            });
-        };
-
-        this.markMessageAsRead = function (url, data) {
-            if (url === null) {
-                return $q.when(null);
-            }
-
-            return $http.put(url, data).then(function (response) {
-                return response.data;
-            }, function (response) {
-                return $q.reject();
-            });
-        };
-
-        this.sendMessage = function (data) {
-            return $http.post($rootScope.endpoints.messages_url, data).then(function (response) {
-                return response.data;
-            }, function (response) {
-                return $q.reject();
-            });
-        };
     });
 })();

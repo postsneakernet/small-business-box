@@ -2,10 +2,11 @@ from flask import request
 
 from . import api
 from ..models import db, Department
-from ..decorators import json, collection
+from ..decorators import json, collection, cors
 
 
 @api.route('/departments/', methods=['GET'])
+@cors
 @json()
 @collection(Department)
 def get_departments():
@@ -13,12 +14,14 @@ def get_departments():
 
 
 @api.route('/departments/<int:id>', methods=['GET'])
+@cors
 @json()
 def get_department(id):
     return Department.query.get_or_404(id)
 
 
 @api.route('/departments/', methods=['POST'])
+@cors
 @json()
 def new_department():
     department = Department().import_data(request.get_json(force=True))
@@ -28,6 +31,7 @@ def new_department():
 
 
 @api.route('/departments/<int:id>', methods=['PUT'])
+@cors
 @json()
 def update_department(id):
     department = Department.query.get_or_404(id)
@@ -38,6 +42,7 @@ def update_department(id):
 
 
 @api.route('/departments/<int:id>', methods=['DELETE'])
+@cors
 @json()
 def delete_department(id):
     department = Department.query.get_or_404(id)

@@ -1,5 +1,5 @@
 <td ng-hide="filter == 'outbox' || filter == 'search'">
-  {{message.is_unread}}
+  <span ng-show="message.is_unread" class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
 </td>
 <td ng-show="filter == 'outbox' || filter == 'search'">
   {{message.toEmployee.first_name}} {{message.toEmployee.last_name || '(system)'}}

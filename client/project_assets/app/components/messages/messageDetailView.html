@@ -19,7 +19,8 @@
   <div class="col-md-8">
     <span ng-show="isReadOnly">
       <a ui-sref="app.messages.list({filter: '{{filter}}'})"><button class="btn">Back</button></a>
-      <a ng-show="message.from_employee_public_url && filter != 'outbox'" ng-click="reply()">
+      <a ng-show="message.from_employee_id && filter != 'outbox' && message.to_employee_id == currentUser.id"
+         ng-click="reply()">
         <button class="btn">Reply</button>
       </a>
     </span>

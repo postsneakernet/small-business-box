@@ -28,8 +28,19 @@
         // temp
         $rootScope.currentUser = {
             message_url: "http://localhost:5000/v1/employees/1/messages/",
-            id: 1
+            self_url: "http://localhost:5000/v1/employees/1",
+            id: 1,
+            username: ""
         };
+
+        (function () {
+            $http.get("http://localhost:5000/v1/credentials/1").then( function (response) {
+                $rootScope.currentUser.username = response.data.username;
+            }, function (response) {
+                console.log('Failed to get credential from server');
+                $rootScope.appError = 'There was an error communicating with server. Please try again later.';
+            });
+        })();
 
     });
 })();

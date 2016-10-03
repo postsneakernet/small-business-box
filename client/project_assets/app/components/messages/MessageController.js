@@ -1,7 +1,7 @@
 (function () {
     var app = angular.module('sbb');
 
-    app.controller('MessageController', function ($scope, $state, EmployeeService, employeeConfig) {
+    app.controller('MessageController', function ($scope, $state, RestService, employeeConfig) {
         $scope.search = {query: '', option: 'content'};
 
         $scope.setParentSearch = function setSearch() {
@@ -12,20 +12,20 @@
 
         $scope.addEmployeeInfo = function (message) {
             if (message && message.from_employee_public_url) {
-                //$scope.startSpin();
-                EmployeeService.getEmployee(message.from_employee_public_url).then(function (data) {
+                $scope.startSpin();
+                RestService.getResource(message.from_employee_public_url).then(function (data) {
                     message.fromEmployee = data;
-                    //$scope.stopSpin();
+                    $scope.stopSpin();
                 }, function (data) {
                     $scope.addAlert(employeeConfig.fetchError, true);
                 });
             }
 
             if(message) {
-                //$scope.startSpin();
-                EmployeeService.getEmployee(message.to_employee_public_url).then(function (data) {
+                $scope.startSpin();
+                RestService.getResource(message.to_employee_public_url).then(function (data) {
                     message.toEmployee = data;
-                    //$scope.stopSpin();
+                    $scope.stopSpin();
                 }, function (data) {
                     $scope.addAlert(employeeConfig.fetchError, true);
                 });

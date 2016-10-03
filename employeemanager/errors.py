@@ -6,6 +6,10 @@ class ValidationError(ValueError):
     pass
 
 
+class AuthenticationError(ValueError):
+    pass
+
+
 @cors
 def not_found(message):
     response = jsonify({'status': 404, 'error': 'not found', 'message': message})

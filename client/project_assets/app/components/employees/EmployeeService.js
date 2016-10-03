@@ -2,17 +2,6 @@
     var app = angular.module('sbb');
 
     app.service('EmployeeService', function ($http, $q, $rootScope, serviceConfig) {
-        this.getEmployee = function (url) {
-            if (url === null) {
-                return $q.when(null);
-            }
-
-            return $http.get(url).then(function (response) {
-                return response.data;
-            }, function (response) {
-                return $q.reject();
-            });
-        };
 
         this.findEmployee = function (name) {
             if (name === null) {

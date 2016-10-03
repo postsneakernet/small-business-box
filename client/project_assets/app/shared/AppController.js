@@ -34,12 +34,17 @@
             }, 4000);
         };
 
+        var spinCount = 0;
         $scope.startSpin = function () {
+            ++spinCount;
             usSpinnerService.spin('app-spinner');
         };
 
         $scope.stopSpin = function () {
-            usSpinnerService.stop('app-spinner');
+            --spinCount;
+            if (spinCount < 1) {
+                usSpinnerService.stop('app-spinner');
+            }
         };
     });
 })();

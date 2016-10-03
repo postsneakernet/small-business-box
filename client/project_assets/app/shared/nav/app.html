@@ -30,6 +30,7 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li><a>{{currentUser.username}}</a></li>
         <li ng-class="{active: $state.includes('login.login')}">
           <a ui-sref="login.login" ui-sref-active="active">Login</a>
         </li>

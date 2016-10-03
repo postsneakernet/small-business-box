@@ -2,10 +2,11 @@ from flask import request
 
 from . import api
 from ..models import db, Contact
-from ..decorators import json, collection
+from ..decorators import json, collection, cors
 
 
 @api.route('/contacts/', methods=['GET'])
+@cors
 @json()
 @collection(Contact)
 def get_contacts():
@@ -13,12 +14,14 @@ def get_contacts():
 
 
 @api.route('/contacts/<int:id>', methods=['GET'])
+@cors
 @json()
 def get_contact(id):
     return Contact.query.get_or_404(id)
 
 
 @api.route('/contacts/', methods=['POST'])
+@cors
 @json()
 def new_contact():
     contact = Contact().import_data(request.get_json(force=True))
@@ -28,6 +31,7 @@ def new_contact():
 
 
 @api.route('/contacts/<int:id>', methods=['PUT'])
+@cors
 @json()
 def update_contact(id):
     contact = Contact.query.get_or_404(id)
@@ -38,6 +42,7 @@ def update_contact(id):
 
 
 @api.route('/contacts/<int:id>', methods=['DELETE'])
+@cors
 @json()
 def delete_contact(id):
     contact = Contact.query.get_or_404(id)

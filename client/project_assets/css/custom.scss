@@ -12,10 +12,6 @@ body {
     }
 }
 
-.search-box {
-    margin-top: 20px;
-}
-
 .search-dropdown {
     margin-right: -4px;
     border-radius: 4px 0px 0px 4px;
@@ -31,7 +27,7 @@ body {
     top: 24px;
 }
 
-.message-form {
+.message-form, .profile-form, .search-box {
     margin-top: 20px;
 }
 
