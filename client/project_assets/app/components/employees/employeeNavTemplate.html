@@ -1,0 +1,13 @@
+<ul class="nav nav-pills nav-stacked">
+  <li ng-class="{'active': filter == 'all'}">
+    <a ui-sref="app.employees.list({filter: 'all'})">All Employees</a>
+  </li>
+  <li ng-class="{'active': filter == 'managers'}">
+    <a ui-sref="app.employees.list({filter: 'managers'})">Managers</a>
+  </li>
+  <li>Departments</li>
+  <li ng-repeat="department in departments"
+      ng-class="{'active': filter == 'departments' && department.id == activeDept.id}">
+    <a ui-sref="app.employees.list({filter: 'departments'})">{{department.name}}</a>
+  </li>
+</ul>

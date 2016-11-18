@@ -35,22 +35,18 @@
                     }
                 },
             })
+            .state('app.dashboard', {
+                url: '/dashboard',
+                template: '<h1>Dashboard</h1>'
+            })
             .state('app.profile', {
                 url: '/profile',
                 templateUrl: 'app/components/profile/profileView.html',
                 controller: 'ProfileController'
             })
-            .state('app.employees', {
-                url: '/employees',
-                template: '<h1>Employee Directory</h1>'
-            })
             .state('app.apps', {
                 url: '/apps',
                 templateUrl: 'app/components/apps/apps.html'
-            })
-            .state('app.dashboard', {
-                url: '/dashboard',
-                template: '<h1>Dashboard</h1>'
             });
 
         $stateProvider
@@ -83,6 +79,32 @@
                 templateUrl: 'app/components/messages/messageDetailView.html',
                 params: { messageUrl: null },
                 controller: 'MessageDetailController'
+            });
+
+        $stateProvider
+            .state('app.employees', {
+                abstract: true,
+                url: '/employees',
+                template: '<ui-view/>',
+                controller: 'EmployeeController'
+            })
+            .state('app.employees.list', {
+                url: '/:filter/?option?query',
+                templateUrl: 'app/components/employees/employeeListView.html',
+                controller: 'EmployeeListController'
+            })
+            .state('app.employees.detail', {
+                url: '/detail',
+                templateUrl: 'app/components/employees/employeeDetailView.html',
+                params: { employeeUrl: null, filter: null },
+                controller: 'EmployeeDetailController',
+                onEnter: ['$state', '$stateParams', '$timeout', function ($state, $stateParams, $timeout) {
+                    if ($stateParams.messageUrl === null) {
+                        $timeout(function () {
+                            $state.go('app.employees.list', {filter: 'all'});
+                        });
+                    }
+                }]
             });
     });
 })();

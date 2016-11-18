@@ -19,5 +19,17 @@
                 return $q.reject();
             });
         };
+
+        this.getManagers = function (url) {
+            var _url = baseUrl + serviceConfig.perPage;
+            if (url) {
+                _url = url;
+            }
+            return $http.get(_url).then(function (response) {
+                return response.data;
+            }, function (response) {
+                return $q.reject();
+            });
+        };
     });
 })();

@@ -1,7 +1,7 @@
 <div class="row">
 
   <div class="col-md-4">
-    <message-search></message-search>
+    <employee-search></employee-search>
   </div>
 
   <div class="col-md-4">
@@ -13,7 +13,7 @@
 <div class="row">
 
   <div class="col-md-2">
-    <message-nav></message-nav>
+    <employee-nav></employee-nav>
   </div>
 
   <div class="col-md-8">
@@ -22,26 +22,26 @@
       <span>
         <button ng-disabled="!meta.prev_url" ng-click="getPrev()" class="btn">Prev</button>
         <button ng-disabled="!meta.next_url" ng-click="getNext()" class="btn">Next</button>
-        <span>{{minItemPage}} - {{maxItemPage}} of {{meta.total || 0}} messages</span>
+        <span>{{minItemPage}} - {{maxItemPage}} of {{meta.total || 0}} employees</span>
       </span>
     </div>
 
     <table class="table">
       <thead>
         <tr>
-          <th ng-hide="filter == 'outbox' || filter == 'search'">New</th>
-          <th ng-show="filter == 'outbox' || filter == 'search'">To</th>
-          <th ng-hide="filter == 'outbox'">From</th>
-          <th>Subject</th>
-          <th>Date</th>
+          <th>Manager</th>
+          <th>Last</th>
+          <th>First</th>
+          <th>Title</th>
+          <th>Department</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
-        <tr message-list ng-repeat="message in messages">
+        <tr employee-list ng-repeat="employee in employees">
         </tr>
       </tbody>
-      <div ng-hide="messages.length">No messages found.</div>
+      <div ng-hide="employees.length">No employees found.</div>
     </table>
 
   </div>

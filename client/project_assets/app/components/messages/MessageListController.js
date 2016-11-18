@@ -9,11 +9,13 @@
         $scope.search.option = $state.params.option || $scope.search.option || 'content';
         $scope.search.query = $state.params.query || $scope.search.query || '';
 
-        validFilters = ['inbox', 'unread', 'system', 'outbox', 'search'];
+        var validFilters = ['inbox', 'unread', 'system', 'outbox', 'search'];
 
         if (validFilters.indexOf($scope.filter) < 0) {
-            $state.go('app.messages.list', {filter: 'inbox'});
+            $state.go('app.messages.list', { filter: 'inbox' });
         }
+
+        $scope.updateItemListCount();
 
         getMessages();
 
@@ -27,7 +29,7 @@
                 $scope.messages = data.messages;
                 $scope.meta = data.meta;
 
-                updateMessageCount($scope.meta);
+                $scope.updateItemListCount($scope.meta);
 
                 for (var i = 0; i < $scope.messages.length; ++i) {
                     $scope.addEmployeeInfo($scope.messages[i]);
@@ -46,25 +48,6 @@
                 $scope.addAlert(messageConfig.fetchAllError, true);
                 $scope.stopSpin();
             });
-        }
-
-        function updateMessageCount(meta) {
-            var currentPage = meta.page;
-            var totalPage = meta.pages;
-            var perPage = meta.per_page;
-            var totalMessage = meta.total;
-
-            if (currentPage == 1) {
-                $scope.minMessage = (totalMessage > 0) ? 1 : 0;
-            } else {
-                $scope.minMessage = (currentPage - 1) * perPage + 1;
-            }
-
-            if (currentPage == totalPage) {
-                $scope.maxMessage = totalMessage;
-            } else {
-                $scope.maxMessage = (totalMessage > 0) ? perPage * currentPage : 0;
-            }
         }
     });
 })();

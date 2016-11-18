@@ -48,7 +48,7 @@ var vendorPaths = {
             angularSanitize + 'angular-sanitize.js',
             angularSanitize + 'angular-sanitize.min.js',
             angularSpinner + 'angular-spinner.js',
-            angularSpinner + 'angular-spinner-min.js',
+            angularSpinner + 'angular-spinner.min.js',
             spin + 'spin.js',
             spin + 'spin.min.js',
             angularAnimate + 'angular-animate.js',
@@ -72,19 +72,6 @@ var srcPaths = {
     app: app + '**/*'
 };
 
-var watchPaths = {
-    all: [
-        srcPaths.index,
-        srcPaths.css,
-        srcPaths.img,
-        srcPaths.js,
-        srcPaths.app,
-        app + '**/*.html',
-        app + '**/*.js',
-        '!**/.*.swp'
-    ]
-};
-
 var dstPaths = {
     css: assets + 'css',
     fonts: assets + 'fonts',
@@ -94,6 +81,20 @@ var dstPaths = {
     app: project + 'app',
     root: project
 };
+
+var watchPaths = (function () {
+    var result = ['!**/*.swp', app + '**/*.js', app + '**/*.html'];
+    Object.keys(srcPaths).forEach(function (k, i) {
+        if (k == 'app') {
+            console.log("Key is app, skipping");
+            return;
+        }
+        result.push(srcPaths[k]);
+    });
+    return {
+        all: result
+    };
+})();
 
 gulp.task('clean', function () {
     return del([dstPaths.root + '**']);

@@ -1,0 +1,23 @@
+<td>
+  <span ng-show="employee.manager" class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+</td>
+
+<td>
+  {{employee.last_name}}
+</td>
+
+<td>
+  {{employee.first_name}}
+</td>
+
+<td>
+  {{employee.job_title}}
+</td>
+
+<td>
+  {{employee.department.name}}
+</td>
+
+<td>
+  <a ui-sref="app.employees.detail({employeeUrl: '{{employee.self_url}}', filter: '{{filter}}'})">view</a>
+</td>

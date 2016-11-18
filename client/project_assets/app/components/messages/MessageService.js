@@ -13,8 +13,7 @@
             if (url) {
                 _url = url;
                 filter = '';
-            }
-            else if (filter === 'outbox') {
+            } else if (filter === 'outbox') {
                 filter = outbox;
             } else if (filter === 'unread') {
                 filter = inbox + ';is_unread,eq,True';

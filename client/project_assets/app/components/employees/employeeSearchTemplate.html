@@ -1,0 +1,20 @@
+<div class="search-box">
+  <form class="form-inline">
+
+    <div class="form-group">
+      <select ng-model="search.option" class="search-dropdown form-control">
+        <option value="first">First</option>
+        <option value="last">Last</option>
+        <option value="full">Full</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <input ng-model="search.query" placeholder="Search for..." class="search-right form-control" type="text">
+      <span class="input-group-btn">
+        <a ng-click="setParentSearch()" class="btn btn-default" type="button">Go!</a>
+      </span>
+    </div>
+
+  </form>
+</div>

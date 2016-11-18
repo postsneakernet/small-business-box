@@ -3,6 +3,7 @@
 
     app.constant('employeeConfig', {
         searchError: 'An issue occurred while searching for employee',
-        fetchError: 'An issue occured while getting employee from server'
+        fetchError: 'An issue occured while getting employee from server',
+        fetchAllError: 'An issue occured while retrieving employees from server'
     });
 })();

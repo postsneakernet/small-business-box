@@ -46,5 +46,30 @@
                 usSpinnerService.stop('app-spinner');
             }
         };
+
+        $scope.updateItemListCount = function (meta) {
+            if (!meta) {
+                $scope.minItemPage = 0;
+                $scope.maxItemPage = 0;
+                return;
+            }
+
+            var currentPage = meta.page;
+            var totalPage = meta.pages;
+            var perPage = meta.per_page;
+            var totalItem = meta.total;
+
+            if (currentPage == 1) {
+                $scope.minItemPage = (totalItem > 0) ? 1 : 0;
+            } else {
+                $scope.minItemPage = (currentPage - 1) * perPage + 1;
+            }
+
+            if (currentPage == totalPage) {
+                $scope.maxItemPage = totalItem;
+            } else {
+                $scope.maxItemPage = (totalItem > 0) ? perPage * currentPage : 0;
+            }
+        };
     });
 })();

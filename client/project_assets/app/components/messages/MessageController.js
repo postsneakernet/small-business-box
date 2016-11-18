@@ -2,7 +2,7 @@
     var app = angular.module('sbb');
 
     app.controller('MessageController', function ($scope, $state, RestService, employeeConfig) {
-        $scope.search = {query: '', option: 'content'};
+        $scope.search = { query: '', option: 'content' };
 
         $scope.setParentSearch = function setSearch() {
             $state.go('app.messages.list',
@@ -18,16 +18,18 @@
                     $scope.stopSpin();
                 }, function (data) {
                     $scope.addAlert(employeeConfig.fetchError, true);
+                    $scope.stopSpin();
                 });
             }
 
-            if(message) {
+            if (message) {
                 $scope.startSpin();
                 RestService.getResource(message.to_employee_public_url).then(function (data) {
                     message.toEmployee = data;
                     $scope.stopSpin();
                 }, function (data) {
                     $scope.addAlert(employeeConfig.fetchError, true);
+                    $scope.stopSpin();
                 });
             }
         };
